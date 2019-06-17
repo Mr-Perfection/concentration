@@ -9,9 +9,9 @@
 import UIKit
 
 class ViewController: UIViewController {
-    lazy var game = Concentration(numberOfPairsOfCards: cardButtons.count / 2)
+    private lazy var game = Concentration(numberOfPairsOfCards: cardButtons.count / 2)
     
-    var flipCount = 0 {
+    private(set) var flipCount = 0 {
         didSet {
             flipCountLabel.text = String(flipCount)
         }
@@ -22,11 +22,11 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-    @IBOutlet var cardButtons: [UIButton]!
+    @IBOutlet private var cardButtons: [UIButton]!
 
-    @IBOutlet weak var flipCountLabel: UILabel!
+    @IBOutlet private weak var flipCountLabel: UILabel!
 
-    @IBAction func touchCard(_ sender: UIButton) {
+    @IBAction private func touchCard(_ sender: UIButton) {
         flipCount+=1
         if let cardNumber = cardButtons.firstIndex(of: sender) {
             game.chooseCard(at: cardNumber)
@@ -36,7 +36,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func updateViewFromModel() {
+    private func updateViewFromModel() {
         for index in cardButtons.indices {
             let button = cardButtons[index]
             let card = game.cards[index]
@@ -51,7 +51,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func flipCard(withEmoji emoji: String, on button: UIButton) {
+    private func flipCard(withEmoji emoji: String, on button: UIButton) {
         if button.currentTitle == emoji {
             button.setTitle("", for: UIControl.State.normal)
             button.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
@@ -61,9 +61,9 @@ class ViewController: UIViewController {
         }
     }
     
-    var emojis = ["🧠", "🦷", "😇", "🎳", "🚀", "🛸", "💿"]
-    var emojiDict = [Int : String]()
-    func getEmoji(for card: Card) -> String {
+    private var emojis = ["🧠", "🦷", "😇", "🎳", "🚀", "🛸", "💿"]
+    private var emojiDict = [Int : String]()
+    private func getEmoji(for card: Card) -> String {
         if emojiDict[card.identifier] == nil, emojis.count > 0 {
             let randomNumber = Int(arc4random_uniform(UInt32(emojis.count)))
             emojiDict[card.identifier] = emojis[randomNumber]
