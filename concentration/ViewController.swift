@@ -9,7 +9,11 @@
 import UIKit
 
 class ViewController: UIViewController {
-    private lazy var game = Concentration(numberOfPairsOfCards: cardButtons.count / 2)
+    private lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
+    
+    private var numberOfPairsOfCards: Int {
+        return cardButtons.count / 2;
+    }
     
     private(set) var flipCount = 0 {
         didSet {
@@ -75,3 +79,15 @@ class ViewController: UIViewController {
     }
 }
 
+extension Int {
+    var arc4random: Int {
+        if self > 0 {
+            return Int(arc4random_uniform(UInt32(self)))
+        } else if self < 0 {
+            return -Int(arc4random_uniform(UInt32(self)))
+        } else {
+            return 0
+        }
+    }
+    
+}
